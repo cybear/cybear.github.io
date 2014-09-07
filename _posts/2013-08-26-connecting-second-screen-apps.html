@@ -1,0 +1,52 @@
+---
+layout: post
+title: Connecting Second Screen Apps
+date: 2013-08-26 10:20:11.000000000 +02:00
+categories:
+- mobile web development
+tags:
+- captive portal
+- html5
+- Second Screen Apps
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+  _rawhtml_settings: '0,0,0,0'
+author:
+  login: cybear
+  email: cybear@gmail.com
+  display_name: cybear
+  first_name: ''
+  last_name: ''
+---
+<blockquote>Second screen, sometimes also referred to as "companion device" (or "companion apps" when referring to software applications), is a term that refers to an additional electronic device (e.g. tablet, smartphone) that allows a content consumer to interact with the content they are consuming, such as TV shows, movies, music, or video games. Extra data is displayed on a portable device synchronized with the content being viewed on television.</p>
+<p>— <a href="http://en.m.wikipedia.org/wiki/Second_screen">Wikipedia</a>
+</p></blockquote>
+<p>I believe that Second Screen Apps can be amazing. They will in deed tap into your TV, game console and car but also many more situations. They will largely be implemented in native apps but HTML5 will be essential for a good user experience. In this post I will list different methods of connecting your users to your Second Screen App. </p>
+<p><strong>The critical steps</strong></p>
+<p>The most critical steps for a user in their experience of a Second Screen App is figuring out how get started. Where do I get the app? Should I scan a QR-code? Should I scan it with my Second Screen App or a QR reader app? Do I connect to a WiFi SSID? </p>
+<p>The hurdle can be quite high and the best thing we can do is to reduce the number of steps required to get started:</p>
+<p>App: </p>
+<ol>
+<li>Scan QR-code to get link to app store<br />
+(If you don't have a QR-app, also get that)</li>
+<li>Click to download</li>
+<li>Enter app store credentials</li>
+<li>Wait for DL</li>
+<li>Find the app and launch it</li>
+</ol>
+<p>HTML5:</p>
+<ol>
+<li>Open web browser</li>
+<li>Type in URL</li>
+</ol>
+<p>HTML5 + Captive Portal:</p>
+<ol>
+<li>Connect to SSID</li>
+</ol>
+<p><em>The right URL opens automatically in web browser</em></p>
+<p><strong>Clearly HTML5 and a Captive Portal provides the best user experience for connecting your Second Screen App</strong>. </p>
+<p>Then again, please note that users are different, so different paths might feel natural to them. It might be a good strategy to offer more than one way to connect to the app.<br />
+Also note that apps offer more features than HTML5 such as notifications and background running.</p>

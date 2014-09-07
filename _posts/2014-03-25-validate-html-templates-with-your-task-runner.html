@@ -1,0 +1,43 @@
+---
+layout: post
+title: Validate HTML templates with your task runner
+date: 2014-03-25 19:48:51.000000000 +01:00
+categories:
+- tutorial
+tags: []
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+author:
+  login: cybear
+  email: cybear@gmail.com
+  display_name: cybear
+  first_name: ''
+  last_name: ''
+---
+<p><!-- The one thing almost every frontend developer forgets to do --><br />
+<strong>Most frontend developers nowadays automatically validate their JavaScript and CSS, but it's easy to forget to validate the HTML.</strong></p>
+<p><span style="line-height: 1.714285714; font-size: 1rem;">Many of us use a task runner to keep our JavaScript lint-free using JSLint or JSHint (some people probably even started using </span><a style="line-height: 1.714285714; font-size: 1rem;" href="http://www.nczonline.net/blog/2013/07/16/introducing-eslint/">ESLint</a><span style="line-height: 1.714285714; font-size: 1rem;">). Many of us automatically validate our LESS, SASS, Stylus or CSS. </span>But can you say that you are automatically validating your HTML?</p>
+<p>At the last <a href="http://copenhagenjs.dk/">CopenhagenJS</a>, the main talk of the evening was <a href="http://lanyrd.com/2014/copenhagenjs-march/scxzdd/">"Grunt vs. Gulp - a JavaScript Task runner showdown"</a> by <a href="https://twitter.com/vanjacosic">Vanja Ćosić</a>. More than half of the audience had experience with <a href="http://gruntjs.com/">Grunt</a>, and perhaps 10% had experience with <a href="http://gulpjs.com/">Gulp</a>. 40 people is a very small sample but it proves that most of us started automating some of the tasks in our everyday workflow.</p>
+<h3>W3C validator</h3>
+<p><img alt="" src="http://habilis.net/validator-sac/xvalidator-SAC.png.pagespeed.ic.6xld25zh0H.png" /></p>
+<p><em>Validator S.A.C., a native Mac application around W3C's validator</em></p>
+<p>I love the <a href="http://validator.w3.org/">W3C validator</a>. To me, this is the best validator, but if you know of any other good validators, please let me know. What bothered me though, was the fact that I always had to visit the website to check my page. <strong>Was there a way to check it using Grunt or Gulp?</strong></p>
+<h3>grunt-html-validation</h3>
+<p>The grunt-html-validation takes you a long way. You can set up the grunt task to run after your filesystem watcher, to automatically check every time you save any HTML file in your project. However, with several files and iterations, you are going to end up "spamming" the server. <strong>They will block you after a few requests!</strong> To me it happened after a thousand or a little more requests. The unblocking happens after an hour or so. But don't worry, there's a simple solution to this problem!</p>
+<h3>Install W3C validator locally</h3>
+<p>Installing the W3C validator will not only let you do as many validations as your heart desires, it could also be slightly faster because you eliminate the roundtrip over the Internet to the W3C server and back. The process of installation used to require <a href="http://validator.w3.org/docs/install.html">sorting out dependencies and building the source code,</a> but is now a piece of cake using one of <a href="http://validator.w3.org/source/">the pre-made builds</a>. For Mac, there's a <a href="http://habilis.net/validator-sac/">standalone application called Validator S.A.C</a>.</p>
+<p><strong><a href="http://habilis.net/download/Validator-SAC_0.10.3.zip">Direct link to download it here</a></strong> or the check web page for most recent version. Run the installer and you're done!</p>
+<h3><span style="font-size: 1.142857143rem; line-height: 1.846153846;">Running a web service</span></h3>
+<p>This step is intended for the Mac application Validator S.A.C. It could look different for the other platforms, however I haven't tried them yet.</p>
+<p>Install the configuration file and restart Apache:</p>
+<pre>cd /Applications/Validator-SAC.app/Contents/Resources
+% sudo cp validator/httpd/conf/validator-SAC.conf /etc/apache2/other
+% sudo apachectl graceful
+</pre>
+<p>You might get an error during the installation, like I did (on OS X 10.9). For some reason, the last line in the validator-SAC.conf caused the error. You can just put a # at the start of the whole line to disable it - it's not needed. What it's supposed to do is to register as a Bonjour service. This way "anyone on your local network can access the service from a Bonjour enabled browser (for example, Safari's Bonjour bookmark menu)." (quote from the website).</p>
+<h3>Configure your plugin to use localhost</h3>
+<p>For grunt-html-validate, just set options.serverUrl to "http://localhost/w3c-validator/check". Now you're all set!</p>
+<p>Now spend the rest of your day checking and fixing all the problems that have snuck in to your HTML! The better part are probably completely harmless, but dare I bet you have a bigger number of warnings than you think? :))</p>

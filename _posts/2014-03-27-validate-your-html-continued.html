@@ -1,0 +1,30 @@
+---
+layout: post
+title: Validate your HTML, continued
+date: 2014-03-27 12:10:50.000000000 +01:00
+categories: []
+tags: []
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+author:
+  login: cybear
+  email: cybear@gmail.com
+  display_name: cybear
+  first_name: ''
+  last_name: ''
+---
+<p>Following up my post about validating your HTML, here comes some alternatives to the tools that I suggested in the first post!</p>
+<h3>Alternative validator: vnu.jar</h3>
+<p>There's another validator called vnu.jar. Check out <a href="http://validator.nu/">the vnu.jar web service</a>, <a href="http://validator.github.io/">vnu.jar website</a> and <a href="https://github.com/validator">source code</a>. It's very easy to install.</p>
+<p>There's a Grunt plugin to use vnu.jar as validator: <a href="https://github.com/jzaefferer/grunt-html">grunt-html</a>.</p>
+<h3>Alternative build system: Gulp</h3>
+<p><a href="https://github.com/callumacrae/gulp-w3cjs">gulp-w3cjs</a> works with W3C.js under the hood just like grunt-html-validate. It does not yet have an option to use a locally installed validator. Any takers? :)</p>
+<h3>HTML, what's the point?</h3>
+<p>Finally, I've heard from a reader that <strike>doesn't see the point in validating HTML</strike> was missing reasons for why we should validate HTML:</p>
+<p><q>I do miss a discussion about the *value* of validating HTML. You seem to simply assert that it is valuable, but without some kind of justification for why you should do it, validating HTML is IMO just cargo culting.</p>
+<p>Or to put it in another way: You should reflect on the question of why many (most?) don’t bother validating their HTML. Is it because the ROI is too insignificant?</q></p>
+<p>Here's a great answer provided by <a href="https://twitter.com/anddoutoi">Anders Ringqvist</a>:</p>
+<p><q>HTML validation is *not* cargo culting. If I got a dollar for every time I fixed/answered someones problem/question about a layout problem that was only bad nesting of tags I would be richer than Mark Zuckerberg. Not validated HTML is a time vampire for your dev team. Of course if you only do open source and have all the time in the world or do solo dev then by all means.</q></p>

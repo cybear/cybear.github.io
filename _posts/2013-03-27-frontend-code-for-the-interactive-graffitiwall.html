@@ -1,0 +1,30 @@
+---
+layout: post
+title: Frontend code for the interactive graffiti wall
+date: 2013-03-27 22:20:40.000000000 +01:00
+categories:
+- _
+tags: []
+status: draft
+type: post
+published: false
+meta:
+  _edit_last: '1'
+  _rawhtml_settings: '0,0,0,0'
+author:
+  login: cybear
+  email: cybear@gmail.com
+  display_name: cybear
+  first_name: ''
+  last_name: ''
+---
+<p>In my previous blog post, I described how to make the hardware and software setup for an interactive graffiti wall. In this blog post, I will explain what the frontend code does and how you can make your own similar code!</p>
+<p>We have three roles in this architecture.</p>
+<ul>
+<li>Display - shows the results of all user inputs</li>
+<li>Smartphone - reports all input to the server</li>
+<li>Server - proxies all events from smartphones to the display</li>
+</ul>
+<p>For this kind of setup, we could spread the logic across all these roles. I chose however to try something different: The smartphones are simply passing on events. The server is also simply passing on events. This means that we can implement all logic on the display end of the code. To listen to the smartphones, simply use</p>
+<p>devices.addEventListener(eventType, callback)</p>
+<p>&nbsp;</p>

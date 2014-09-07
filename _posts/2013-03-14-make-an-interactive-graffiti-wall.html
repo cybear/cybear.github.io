@@ -1,0 +1,203 @@
+---
+layout: post
+title: Make an interactive graffiti wall
+date: 2013-03-14 15:08:32.000000000 +01:00
+categories:
+- tutorial
+tags:
+- interaction
+- raspberry pi
+- router
+- tutorial
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+  _rawhtml_settings: '0,0,0,0'
+  _pagelines_layout_mode: one-sidebar-right
+  box_set: default-boxes
+author:
+  login: cybear
+  email: cybear@gmail.com
+  display_name: cybear
+  first_name: ''
+  last_name: ''
+---
+<p>[caption id="attachment_194" align="aligncenter" width="595"]<a href="http://tap5.com/blog/wp-content/uploads/2013/03/example1.png"><img class="size-large wp-image-194" alt="Illustration of an interactive graffiti wall" src="http://tap5.com/blog/wp-content/uploads/2013/03/example1.png" width="595" height="420" /></a> Make an interactive graffiti wall using Raspberry Pi and Node.JS[/caption]</p>
+<p>In this tutorial we will enable a projector or display to be painted on using connected smartphones. With the setup described, it's easy to implement your own multi-device applications.</p>
+<h1>This is awesome</h1>
+<p>A personal note: As a frontend developer, I think it's amazing to be able to leverage such a humble hardware setup. Just using a Raspberry Pi and some accessories, I get a web server that users can connect to with Wi-Fi <strong>and</strong> the rendering of HTML5 and CSS3 to a display. The software is all open source and all open web standards.</p>
+<p>There are however limitations to how much you can do on the rendering side. Most importantly, CSS3 is not hardware accelerated on the Raspberry Pi yet. I've published <a href="https://gist.github.com/cybear/4751158">some performance tweaks</a> if you want to delve into that.</p>
+<h1>Table of contents</h1>
+<ol>
+<li><a href="#hardware">Hardware setup / Shopping list</a></li>
+<li><a href="#software">Software setup</a></li>
+<li><a href="#frontend">Frontend setup</a></li>
+<li><a href="#starting">Let's get cracking!</a></li>
+<li><a href="#installation">Software installation</a></li>
+<li><a href="#kiosk">Browser in kiosk mode</a></li>
+<li><a href="#reboot">Reboot your Pi</a></li>
+</ol>
+<h1 id="hardware">Hardware setup / Shopping list</h1>
+<p>[caption id="attachment_202" align="aligncenter" width="595"]<a href="http://tap5.com/blog/wp-content/uploads/2013/03/hw.jpg"><img class="size-large wp-image-202" alt="hardware setup" src="http://tap5.com/blog/wp-content/uploads/2013/03/hw.jpg" width="595" height="472" /></a> Raspberry Pi, SD card, Wi-Fi router, USB cables, network cable, charger, HDMI cable[/caption]</p>
+<ul>
+<li>Raspberry Pi</li>
+<li>Raspberry Pi basics: Case, SD card (4GB is probably sufficient for this project), USB power adapter, USB micro cable (for power)</li>
+<li>network cable and WiFi router (your home router is also fine)</li>
+<li><em>optional: <a href="http://copenhagenjs.dk">CopenhagenJS</a> sticker</em></li>
+</ul>
+<h1><a name="software"></a>Software setup</h1>
+<p>[caption id="attachment_214" align="aligncenter" width="595"]<a href="http://tap5.com/blog/wp-content/uploads/2013/03/sw.png"><img class="size-large wp-image-214" alt="Software: Debian, NodeJS, Socket.IO, Chromium" src="http://tap5.com/blog/wp-content/uploads/2013/03/sw.png" width="595" height="211" /></a> Software: Debian, NodeJS, Socket.IO, Chromium[/caption]</p>
+<ul>
+<li>OS: Raspbian Node.JS</li>
+<li>Browser: Chromium in kiosk mode</li>
+<li>Server: Node.JS</li>
+<li>Socket library: Socket.IO</li>
+</ul>
+<h1><a name="frontend"></a>Frontend setup</h1>
+<ul>
+<li>Module library: Require.JS</li>
+<li>Event capturing library: capture-smartphone</li>
+<li>Absolutely no jQuery what so ever!</li>
+</ul>
+<p>There's more to be said about this setup. I will go through the details in a blog post coming up.</p>
+<h1><a name="starting"></a>Let's get cracking!</h1>
+<p>First <strong>acquire all the hardware</strong> in the list above. You probably have most of the things already. If you don't have a case for the Raspberry Pi, don't despair. You can <a href="http://www.raspberrypi.org/archives/1354">make one in Lego</a> or out of any box of the right size. <a href="http://www.raspberrypi.org/downloads">Download the official Raspbian image</a> and <a href="http://elinux.org/RPi_Easy_SD_Card_Setup">copy it to the SD card</a>. Connect your Pi to your network and power it up. Establish a connection from your working machine via SSH. <strong>User pi, default password raspberry</strong>.</p>
+<h3>Tip</h3>
+<p>Add your local machine's public SSH key if you don't want to type your password every time you connect:</p>
+<pre class="language-bash"><code># from localhost, add ssh-key to your Raspberry Pi 
+# to avoid having to type password all the time
+ssh-copy-id -i .ssh/id_rsa.pub pi@raspberrypi</code></pre>
+<h1><a name="installation"></a>Software installation</h1>
+<h2>Raspberry pi utility</h2>
+<p><strong>raspi-config</strong> is a useful utility for getting started with your Raspberry Pi. It has an easy-to-use graphical (well, ncurses) interface. I recommend doing these things now:</p>
+<ul>
+<li>Expand the disk</li>
+<li>Choose a locale</li>
+<li><s>Enable <a href="http://www.raspberrypi.org/archives/2008">Turbo mode</a> for greater speed</s> <strong>Beware</strong>: Only class 10 SD cards seem to be able to take a high overclocking! If too high, it will cause corruption of the data on the SD card.</li>
+</ul>
+<pre class="language-bash"><code>sudo raspi-config</code></pre>
+<h2>Update all APT packages</h2>
+<pre class="language-bash"><code>sudo apt-get update
+sudo apt-get upgrade
+</code></pre>
+<h2>Install GIT</h2>
+<pre class="language-bash"><code>sudo apt-get install git-core</code></pre>
+<h2>Update firmware</h2>
+<pre class="language-bash"><code>sudo wget http://goo.gl/1BOfJ -O /usr/bin/rpi-update 
+sudo chmod +x /usr/bin/rpi-update
+sudo rpi-update</code></pre>
+<h2>Install NVM and the latest stable Node.JS</h2>
+<p>Because of the certification process in Debian Stable, current NodeJS in APT is 0.6. We want to run a more recent version so we have to install it manually.</p>
+<p><strong>Update</strong>: The official NodeJS site now provides binaries for Raspberry Pi! Simply download the binary at <a href="http://nodejs.org/dist/v0.10.5/">http://nodejs.org/dist/v0.10.5/</a> (switch the number to whatever is considered latest stable by the NodeJS site.) The filename of your download should be called something like node-v0.10.5-<b>linux-arm-pi</b>.tar.gz.</p>
+<p>If you want to be able to easily jump between NodeJS versions and don't mind building it locally (takes hours!) then I still recommend using <a href="https://github.com/creationix/nvm">NVM</a> which is a handy version manager for Node itself.</p>
+<pre class="language-bash"><code>git clone git://github.com/creationix/nvm.git ~/.nvm
+. ~/.nvm/nvm.sh
+echo . ~/.nvm/nvm.sh &gt;&gt; .bashrc
+nvm install v0.10.5
+nvm alias default 0.10.5
+</code></pre>
+<h2>Add the boilerplate website</h2>
+<p>Get <a href="https://github.com/cybear/capture-smartphone">the source code for this project</a> and install its dependencies</p>
+<pre class="language-bash"><code>git clone https://github.com/cybear/capture-smartphone.git 
+cd capture-smartphone
+npm install</code></pre>
+<h2>Start your site up as a daemon</h2>
+<p>We want our server to start automatically. For NodeJS, we can use the following script to use a node.js app as a daemon:</p>
+<p>Create /etc/init.d/node-app</p>
+<pre class="language-bash"><code>#/bin/sh
+#This script is copied from https://github.com/chovy/node-startup
+NODE_EXEC=/home/pi/.nvm/v0.10.5/bin/node
+NODE_ENV="production"
+NODE_APP='app.js'
+APP_DIR='/home/pi/capture-smartphone';
+PID_FILE=$APP_DIR/app.pid
+LOG_FILE=$APP_DIR/app.log
+
+###############
+
+# REDHAT chkconfig header
+
+# chkconfig: - 58 74
+# description: node-app is the script for starting a node app on boot.
+### BEGIN INIT INFO
+# Provides: node
+# Required-Start:    $network $remote_fs $local_fs 
+# Required-Stop:     $network $remote_fs $local_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: start and stop node
+# Description: Node process for app
+### END INIT INFO
+
+case "$1" in
+    start)
+        if [ -f $PID_FILE ]
+        then
+                echo "$PID_FILE exists, process is already running or crashed"
+        else
+                echo "Starting node app..."
+  	NODE_ENV=$NODE_ENV $NODE_EXEC $APP_DIR/$NODE_APP  1&gt;$LOG_FILE 2&gt;&amp;1 &amp;
+		echo $! &gt; $PID_FILE;
+        fi
+        ;;
+    stop)
+        if [ ! -f $PID_FILE ]
+        then
+                echo "$PID_FILE does not exist, process is not running"
+        else
+                echo "Stopping $APP_DIR/$NODE_APP ..."
+		echo "Killing `cat $PID_FILE`"
+		kill `cat $PID_FILE`;
+		rm $PID_FILE;
+                echo "Node stopped"
+        fi
+        ;;
+
+	restart)
+		if [ ! -f $PID_FILE ]
+		then
+			echo "$PID_FILE does not exist, process is not running"
+
+		else
+			echo "Restarting $APP_DIR/$NODE_APP ..."
+			echo "Killing `cat $PID_FILE`"
+			kill `cat $PID_FILE`;
+			rm $PID_FILE;
+			NODE_ENV=$NODE_ENV $NODE_EXEC $APP_DIR/$NODE_APP  1&gt;$LOG_FILE 2&gt;&amp;1 &amp;
+			echo $! &gt; $PID_FILE;
+			echo "Node restarted"
+		fi
+		;;
+
+	*)
+		echo "Usage: /etc/init.d/node-app {start|stop|restart}"
+	;;
+esac</code></pre>
+<p>Now it needs to have a Run flag and we need to start the service:</p>
+<pre class="language-bash"><code>
+sudo chmod +x /etc/init.d/node-app
+#start it!
+sudo /etc/init.d/node-app start
+#if it seems to work, make it start upon boot
+sudo update-rc.d node-app defaults
+</code></pre>
+<h1><a name="kiosk"></a>Browser in kiosk mode</h1>
+<h2>Install Chromium</h2>
+<p>The main display is rendered by the Raspberry Pi. We want it to hide the mouse cursor, disabling the screensaver and to run in full screen mode. The package <a title="Unclutter at Debian Packages" href="http://packages.debian.org/stable/unclutter">unclutter</a> hides the mouse cursor and x11-server-utils enables us to disable the screensaver.</p>
+<pre class="language-bash"><code>
+sudo apt-get install chromium x11-xserver-utils unclutter</code></pre>
+<h2>Enable Kiosk mode</h2>
+<p>For this kind of a device, I'd like the browser to start automatically and in full screen. Create the file /etc/xdg/lxsession/LXDE/autostart</p>
+<pre class="language-bash"><code>
+@lxpanel --profile LXDE
+@pcmanfm --desktop --profile LXDE
+#@xscreensaver -no-splash
+@xset s off
+@xset -dpms
+@xset s noblank
+@chromium --kiosk --incognito http://localhost:3000/examples/graffiti.html</code></pre>
+<h1><a name="reboot"></a>Reboot your Pi</h1>
+<p>You're done! By now you should have your own interactive graffiti wall. Simply connect the Pi to your router, then connect smartphones to your SSID and fire up the web page!</p>
+<p>If you're inspired and want to make something of your own, be my guest to fork the code of this project. It should be fairly easy if you know JavaScript! Stay tuned for a blog post describing the web technologies used for this example.</p>
