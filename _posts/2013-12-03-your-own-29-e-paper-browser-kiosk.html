@@ -1,0 +1,63 @@
+---
+layout: post
+title: Your own £29 e-paper browser kiosk
+date: 2013-12-03 13:16:38.000000000 +01:00
+categories:
+- browser kiosk
+- phonegap
+- tutorial
+tags:
+- nook
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+author:
+  login: cybear
+  email: cybear@gmail.com
+  display_name: cybear
+  first_name: ''
+  last_name: ''
+---
+<p>I've been tinkering around with the Nook Simple Touch to see if I can make it into a browser kiosk. It's an e-reader from Barnes &amp; Noble similar to the Kindle, but it's very cheap; on offer now <a href="http://www.barnesandnoble.com/p/nook-simple-touch-barnes-noble/1102344735">in the US for $59</a> and in the <a href="http://www.nook.com/gb/tablets/nook-simple-touch">UK for £29</a>! It runs Android and you can pretty easily jailbreak it.<br />
+Turns out it's very easy to turn it into your own browser kiosk!</p>
+<p>[caption id="attachment_300" align="aligncenter" width="625"]<a href="http://tap5.com/blog/wp-content/uploads/2013/12/photo-e1386076113356.jpg"><img class="size-large wp-image-300" alt="Phonegap running on Nook Simple Touch" src="http://tap5.com/blog/wp-content/uploads/2013/12/photo-e1386076113356-768x1024.jpg" width="625" height="833" /></a> Phonegap running on Nook Simple Touch[/caption]</p>
+<h2>What can I do with it?</h2>
+<p>The first thing that pops to my mind is single-purpose, fixed home gadgets.</p>
+<ul>
+<li><strong>Wall clock</strong>: Show the time, weather and what our calendars show for today.</li>
+<li><strong>Home Automation Remote</strong>: Put it on the wall next to the light switches. Show controls for wireless lights, music and volume etc.</li>
+</ul>
+<h2>Advantages</h2>
+<ul>
+<li><strong>Everything in one device</strong>: Touch display, web browser, WiFi</li>
+<li><strong>Thin product</strong> that easily can be mounted to a wall</li>
+<li><strong>Low power</strong> consumption because of E-ink display (however WiFi does drain it over a day or so)</li>
+<li>Good exercise in <strong>UI constraints</strong> - monochrome display with slow refresh rate</li>
+</ul>
+<h2>Let's do it!</h2>
+<h3>Root the Nook</h3>
+<p>Follow the instructions here: <a href="http://www.babblingengineer.com/how-to/how-i-turned-my-nook-into-an-e-reader-monster/">http://www.babblingengineer.com/how-to/how-i-turned-my-nook-into-an-e-reader-monster/</a></p>
+<h4>Install the browser kiosk</h4>
+<p>On your computer:<br />
+Install Phonegap: npm install -g phonegap<br />
+Make a Phonegap app:<br />
+phonegap create nook-kiosk<br />
+Add your web page to the www/ folder or point the project to your website<br />
+Build with Android as target platform: phonegap run android<br />
+After a short while, your app is ready.<br />
+Open the URL to your APK file in your Nook browser. You will be asked if you want to install it. Do it!</p>
+<h3>Disable sleep</h3>
+<p>adb shell<br />
+sqlite3 /data/data/com.android.providers.settings/databases/settings.db<br />
+update system set value='-1' where name='screen_off_timeout';</p>
+<p>Now you can have an awesome touch-based remote for your home automation system - have it always display the menu and put it up on the wall together with the light switches :-)</p>
+<h3>Questions I still haven't solved</h3>
+<ul>
+<li>Can we use the physical side buttons? (There's two on the left side and two on the right)</li>
+<li>Can we disable the home button?</li>
+<li>How to make the kiosk app autostart? As of now, I've used an app from the Kindle App Store to do it for me.</li>
+</ul>
+<h3>Ideas?</h3>
+<p>Does this give you ideas? Let me know in the comments!</p>

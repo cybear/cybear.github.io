@@ -1,0 +1,33 @@
+---
+layout: post
+title: Get HTTP Archive files easily when visiting Open Device Lab
+date: 2013-05-22 13:17:39.000000000 +02:00
+categories:
+- _
+tags: []
+status: draft
+type: post
+published: false
+meta:
+  _edit_last: '1'
+  _rawhtml_settings: '0,0,0,0'
+author:
+  login: cybear
+  email: cybear@gmail.com
+  display_name: cybear
+  first_name: ''
+  last_name: ''
+---
+<h4>You can easily generate <a href="http://httparchive.org/index.php">HTTP Archive</a> files when visiting an Open Device Lab.</h4>
+<ol>
+<li>Install <a href="http://www.wireshark.org/download.html">WireShark</a></li>
+<li>Choose to sniff on your wireless interface.</li>
+<li>Define a filter to sniff on. "HTTP" is normally enough. Apply.</li>
+<li>Optional - connect your laptop by cable to the Internet (if you need access to the Internet).</li>
+<li>Share your connection. (On Mac: Network &gt; Create Network.)</li>
+<li>Connect all devices to your network.</li>
+<li>Visit your site!</li>
+<li>When your session is over, choose "File &gt; Save as", choose format "Wireshark/TCPDump libcap".</li>
+<li>Upload your file to <a href="http://pcapperf.appspot.com/">http://pcapperf.appspot.com/</a></li>
+<li>You can see a nice waterfall and download your HAR!</li>
+</ol>

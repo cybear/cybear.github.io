@@ -1,0 +1,132 @@
+---
+layout: post
+title: 3D modelling with Sketchup (basics)
+date: 2014-03-08 11:35:04.000000000 +01:00
+categories:
+- 3D
+tags: []
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+author:
+  login: cybear
+  email: cybear@gmail.com
+  display_name: cybear
+  first_name: ''
+  last_name: ''
+---
+<h2>Notes from newbeginner's 3D workshop by Marie Dahlén at Fabriken</h2>
+<p>Date: 2014-03-08<br />
+Location: <a href="stpln.se/projekt/fabriken/">Fabriken / Stapeln</a><br />
+Tutor: <a href="https://twitter.com/Maerklig">Marie Dáhlen</a></p>
+<p>&nbsp;</p>
+<p><b>Intro</b></p>
+<p>Two kinds of 3D: Polygon or Nurbs</p>
+<p><b>Polygon</b></p>
+<ul>
+<li>Vertex points that are combined to make a polygon</li>
+</ul>
+<p><b>Nurb</b></p>
+<ul>
+<li>More formulas for shapes - become rendered into polygons</li>
+<li>If you want to do a vase you can keep a smooth curve - "high tesselation of the polygons"</li>
+<li>For asymmetrical things, polygons are easier because you can extrude the surfaces you want to alter.</li>
+<li><a href="http://www.rhino3d.com/">Rhinoceros</a> is a good tool for modelling nurbs</li>
+</ul>
+<p><b>Topology</b></p>
+<p>Sketchup does polygon modelling. Unfortunately it's hard to see the topology - how the polygons are built up.</p>
+<p>In 3D printing, topology is very important. Weird "twisted" polygons are bad.</p>
+<p><b>Programs to show the topology</b></p>
+<ul>
+<li>K-3D - free 3D modelling and animation software. Easy to see topology.</li>
+</ul>
+<p><a href="http://www.hongkiat.com/blog/25-free-3d-modelling-applications-you-should-not-miss/">25 (Free) 3D Modeling Applications You Should Not Miss</a></p>
+<p><b>Illustrator</b></p>
+<p>It's possible to export shapes from Illustrator and get them into some 3D editors.</p>
+<p><b>Photoshop CC</b></p>
+<p>Now it's possible to create 3D shapes and even print them, all inside Photoshop CC.</p>
+<p><b>Sketchup walkthrough</b></p>
+<ul>
+<li>You can create a new project with millimeters</li>
+<li>View - Tool palettes - Large toolsets</li>
+<li>The pallet instructor is a good help for newbies</li>
+<li>Good resource: sketchup.com &gt; Learn &gt; Video Tutorials</li>
+<li>The left palette is similar to the palette in Photoshop - but for rectangles</li>
+<li>Click and drag to create a polygon, then click again to finish.</li>
+</ul>
+<p><b>Now we have a rectangle.</b></p>
+<ul>
+<li>Push / pull, drag up to create a cube</li>
+<li>Scroll to zoom in/out</li>
+<li>Push the middle button to pan around</li>
+</ul>
+<p><b>Now we have a cube.</b></p>
+<ul>
+<li>Use the line tool to split into multiple polygons</li>
+<li>Move mouse slowly - when it snaps it's in the middle</li>
+</ul>
+<ul>
+<li>Move tool - select vertices and move them around</li>
+<li>You can also combine multiple objects using this tool</li>
+</ul>
+<ul>
+<li>Create a circle - make it a cylinder</li>
+<li>Select an object, use the move tool, move it into the cube</li>
+<li>Select both, Edit &gt; Intersect Faces &gt; With selection</li>
+</ul>
+<p><b>Now we have a combined shape.</b></p>
+<ul>
+<li>View &gt; Hidden geometry - shows the vertices of the shapes</li>
+<li>In Sketchup, you can't edit the vertices</li>
+<li>View &gt; Face style &gt; X-ray / Wireframe, different ways to see the model</li>
+<li>Vertices inside shapes are bad - select vertices inside of the joined shape to remove them</li>
+</ul>
+<p><b>Other tools</b></p>
+<p>Follow me</p>
+<ul>
+<li>Make an edge, for example using Arc tool</li>
+<li>Select the Follow Me tool</li>
+<li>Push the edge away from the geometry - to nicely create a "chamfer"</li>
+<li>If you need to clean up afterwards, use the eraser tool</li>
+</ul>
+<p>Freehand tool</p>
+<p>Draw a freehand shape and extrude it into a solid object.</p>
+<p>Offset tool</p>
+<ul>
+<li>Select the Offset tool</li>
+<li>Drag out a surface inside another surface</li>
+<li>Use push/pull tool to push the surface down (or up)</li>
+<li>You have created a solid inside!</li>
+</ul>
+<p><b>Tips about workflow</b></p>
+<p>File handling</p>
+<ul>
+<li>3D programs tend to crash</li>
+<li>Files tend to be corrupted</li>
+<li>Save your files often</li>
+<li>Save different versions of files - for instance append a number at the end of the filename</li>
+<li>Sketchup auto-saves by default every 5 mins, also creates backup file</li>
+</ul>
+<p>Do alterations of same object, keep them all in same scene</p>
+<ul>
+<li>Show / hide geometries</li>
+<li>Edit &gt; Hide (Apple+E) to hide object</li>
+</ul>
+<p><b>Prepare for 3D printing</b></p>
+<ul>
+<li>You must have solid objects (both an outside and inside / a "thickness")</li>
+<li>You can preview your model in Slic3r to see if it will work</li>
+<li>When something is sticking out to the side, you need support structure (work against gravity)</li>
+<li><a href="https://www.ultimaker.com/pages/support/manuals">Cura</a>, <a href="http://slic3r.org/">Slic3r</a>, <a href="http://www.meshmixer.com/">Mesh Mixer</a> can create support structure</li>
+<li>You might want to rotate the object to get a better structure</li>
+<li>Sometimes you might want to slice your object into multiple pieces (for instance a globus) and then glue them together after they are printed</li>
+</ul>
+<p><b>File format</b></p>
+<p>STL</p>
+<p>Most 3D programs print from .STL, but in Sketchup you need to download <a href="http://extensions.sketchup.com/en/content/sketchup-stl">the extension to export to STL</a>.</p>
+<p>File &gt; Export STL...</p>
+<p>Working with other 3D programs</p>
+<p>It's common to do quick sketches in Sketchup and then keep working on details in other programs.</p>
+<p>FBX, OBJ are the most common formats shared by other 3D modelling software.</p>

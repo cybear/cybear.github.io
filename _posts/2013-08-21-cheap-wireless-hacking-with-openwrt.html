@@ -1,0 +1,72 @@
+---
+layout: post
+title: Cheap wireless hacking with OpenWRT
+date: 2013-08-21 12:39:30.000000000 +02:00
+categories:
+- _
+tags:
+- captive portal
+- openwrt
+- raspberry pi
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+  _rawhtml_settings: '0,0,0,0'
+author:
+  login: cybear
+  email: cybear@gmail.com
+  display_name: cybear
+  first_name: ''
+  last_name: ''
+---
+<p>Since I bought my WiFi-router in 2006, a Linksys WRT54G, I've been interested in open source router firmwares and network hacking. At the time, the features seemed quite amazing. You could do all kinds of super features, for instance <abbr title="Quality of Service">QoS, formerly only available in professional equipment.</p>
+<p><a href="http://tap5.com/blog/wp-content/uploads/2013/08/openwrt-logo.png"><img src="http://tap5.com/blog/wp-content/uploads/2013/08/openwrt-logo.png" alt="openwrt-logo" width="386" height="98" class="aligncenter size-full wp-image-269" /></a><br />
+The firmware that stuck with me is <a href="https://openwrt.org">OpenWRT</a> but there is more to choose from, for instance <a href="http://www.polarcloud.com/tomato">Tomato</a> and <a href="http://www.dd-wrt.com/site/index">DD-WRT</a>.</p>
+<p>Quite recently I've started poking around with embedded, using node.js on a Raspberry Pi. When I needed WiFi that was not always easy: </p>
+<ul>
+<li>Because WiFi dongles have relatively high power consumption and <a href="http://raspberrypi.stackexchange.com/questions/340/how-much-power-can-be-provided-through-usb">Raspberry Pi won't give much more than 140mA</a>, you need to use a powered USB hub.
+</li>
+<li>Some WiFi dongles are plug-and-play, others need a driver (and sometimes some magic) to work.
+</li>
+<li>Only a subset of the <a href="http://wireless.kernel.org/en/users/Drivers">supported WiFi-dongles</a> can be put in <abbr title="Access Point">AP mode<br />
+</abbr></li>
+</ul>
+<p>You might not be surprised that I started looking back to my dear OpenWRT. And since I last used it, lots of cheap hardware has come out which makes it ideal for low budget embedded hacking. </p>
+<p><a href="http://tap5.com/blog/wp-content/uploads/2013/08/TL-MR3020-V1-03.jpg"><img src="http://tap5.com/blog/wp-content/uploads/2013/08/TL-MR3020-V1-03-1024x686.jpg" alt="TL-MR3020-V1-03" width="595" height="398" class="aligncenter size-large wp-image-268" /></a><br />
+The <a href="http://wiki.openwrt.org/toh/tp-link/tl-mr3020">TP-Link MR-3020</a> is about $30 / €20 and has a nice hardware despite its small size: </p>
+<ul>
+<li>Powered via its USB micro connector
+</li>
+<li>Can power the Raspberry Pi via its USB connector
+</li>
+<li>One RJ-45 Ethernet port
+</li>
+<li>WiFi chip can deliver up to 150MBps
+</li>
+<li>Pushbutton that you can configure to do something useful
+</li>
+<li>Flashable out of the box, no need to open up and connect to a serial console
+</li>
+</ul>
+<p>Watch out for TP-Link's over-promising marketing lingo though: "Portable 3G/4G Wireless N Router" does not mean a SIM card reader and 3G chip on the board. It simply means that they added software support for some 3G USB dongles. When you run OpenWRT you still have the option to add a 3G USB dongle, just like with any other OpenWRT compatible hardware that has USB. </p>
+<p>So, you ask, why should I buy something like this and what can I do with OpenWRT? Well, here are some of my ideas: </p>
+<ul>
+<li>Make a Captive Portal for your embedded web server. (Ask me if you want to know more about this)
+</li>
+<li>Make a router for your Device Lab that automatically logs all traffic in <a href="https://dvcs.w3.org/hg/webperf/raw-file/tip/specs/HAR/Overview.html">HAR format</a>
+</li>
+<li>Convert all bypassing images to black and white for the hell of it.
+</li>
+</ul>
+<p>There are obviously many cool hacks for the OpenWRT out there, for instance: </p>
+<ul>
+<li>Add a cheap USB sound card and <a href="http://wiki.openwrt.org/doc/howto/usb.audio#applications">make a jukebox</a>
+</li>
+<li>Make a <a href="http://daviddarts.com/piratebox/">file-sharing device</a>
+</li>
+<li><a href="http://letsmakerobots.com/taxonomy/term/2151">Control a robot via GPIO</a>
+</li>
+</ul>
+<p>So check it out and get started hacking! As a frontend developer I admit that the learning curve can sometimes seem steep, but getting started is very easy and you can get help in the OpenWRT forums. The reward for learning about network hacking is two-fold; First of all it's fun to add network support to your hobby projects. Secondly, you get to know more about network stuff. Having insight in the "plumbing" of the Internet is something you will have lots of use for even as a frontend developer. For one thing, it can have a huge affect on page load speeds.</abbr></p>
